@@ -5,8 +5,11 @@ import java.util.List;
 import com.toiukha.groupactivity.dao.*;
 import com.toiukha.groupactivity.entity.GroupActivityVO;
 
-public class TestJDBCDAO {
-	public static void main(String[] args) {
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class TestJDBCDAO extends HttpServlet {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		GroupActivityDAO actdao = new GroupActivityDAOJDBCimpl();
 		
 		// 新增活動
@@ -57,7 +60,7 @@ public class TestJDBCDAO {
 		
 		
 		// 查詢單筆
-		GroupActivityVO act4 = actdao.getByPKey(10);
+		GroupActivityVO act4 = actdao.getByPK(10);
 		System.out.print(act4.getActId() + ",");
 		System.out.print(act4.getActName() + ",");
 		System.out.print(act4.getActDesc() + ",");
