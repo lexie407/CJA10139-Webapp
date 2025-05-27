@@ -13,7 +13,8 @@ public interface GroupActivityService {
 	GroupActivityVO updateAct(Integer actId, String actName, String actDesc, String imgPath, Integer itnId, Integer hostId,
 			Timestamp signupStart, Timestamp signupEnd, Integer maxCap, Integer signupCnt, Timestamp actStart,
 			Timestamp actEnd, Byte isPublic, Byte allowCancel, Byte recruitStatus);
-	int delete(Integer actId);
+	
+	int deleteAct(Integer actId);
 	
 	GroupActivityVO getByPK(Integer actId);
 	

@@ -70,10 +70,7 @@ public class GroupActivityServiceImpl implements GroupActivityService{
 	}
 
 	
-	@Override
-	public int delete(Integer actId) {
-		return actdao.delete(actId);
-	}
+
 	
 	@Override
 	public GroupActivityVO getByPK(Integer actId) {
@@ -83,6 +80,11 @@ public class GroupActivityServiceImpl implements GroupActivityService{
 	@Override
 	public List<GroupActivityVO> getAll() {
 		return actdao.getAll();
+	}
+
+	@Override
+	public int deleteAct(Integer actId) {
+		return actdao.delete(actId);
 	}
 
 	

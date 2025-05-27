@@ -74,7 +74,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="/groupactivity/act.do" name="form1">
+<FORM METHOD="post" ACTION="${pageContext.request.contextPath}/groupactivity/act.do" name="form1">
 <table>
 	<tr>
 		<td>活動名稱:</td>

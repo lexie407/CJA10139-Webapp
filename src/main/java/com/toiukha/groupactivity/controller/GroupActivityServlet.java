@@ -142,8 +142,8 @@ public class GroupActivityServlet extends HttpServlet {
 				    String signupStartStr = req.getParameter("signupStart").trim();
 				    String signupEndStr = req.getParameter("signupEnd").trim();
 
-				    signupStart = Timestamp.valueOf(signupStartStr.replace("T", " ") + ":00");
-				    signupEnd = Timestamp.valueOf(signupEndStr.replace("T", " ") + ":00");
+				    signupStart = Timestamp.valueOf(signupStartStr);
+				    signupEnd = Timestamp.valueOf(signupEndStr);
 				} catch (IllegalArgumentException | NullPointerException e) {
 				    signupStart = new Timestamp(System.currentTimeMillis());
 				    signupEnd = new Timestamp(System.currentTimeMillis());
@@ -167,8 +167,8 @@ public class GroupActivityServlet extends HttpServlet {
 				    String actStartStr = req.getParameter("actStart").trim();
 				    String actEndStr = req.getParameter("actEnd").trim();
 
-				    actStart = Timestamp.valueOf(actStartStr.replace("T", " ") + ":00");
-				    actEnd = Timestamp.valueOf(actEndStr.replace("T", " ") + ":00");
+				    actStart = Timestamp.valueOf(actStartStr);
+				    actEnd = Timestamp.valueOf(actEndStr);
 				} catch (IllegalArgumentException | NullPointerException e) {
 				    actStart = new Timestamp(System.currentTimeMillis());
 				    actEnd = new Timestamp(System.currentTimeMillis());
@@ -268,8 +268,8 @@ public class GroupActivityServlet extends HttpServlet {
 			    String signupStartStr = req.getParameter("signupStart").trim();
 			    String signupEndStr = req.getParameter("signupEnd").trim();
 
-			    signupStart = Timestamp.valueOf(signupStartStr.replace("T", " ") + ":00");
-			    signupEnd = Timestamp.valueOf(signupEndStr.replace("T", " ") + ":00");
+			    signupStart = Timestamp.valueOf(signupStartStr);
+			    signupEnd = Timestamp.valueOf(signupEndStr);
 			} catch (IllegalArgumentException | NullPointerException e) {
 			    signupStart = new Timestamp(System.currentTimeMillis());
 			    signupEnd = new Timestamp(System.currentTimeMillis());
@@ -293,8 +293,8 @@ public class GroupActivityServlet extends HttpServlet {
 			    String actStartStr = req.getParameter("actStart").trim();
 			    String actEndStr = req.getParameter("actEnd").trim();
 
-			    actStart = Timestamp.valueOf(actStartStr.replace("T", " ") + ":00");
-			    actEnd = Timestamp.valueOf(actEndStr.replace("T", " ") + ":00");
+			    actStart = Timestamp.valueOf(actStartStr);
+			    actEnd = Timestamp.valueOf(actEndStr);
 			} catch (IllegalArgumentException | NullPointerException e) {
 			    actStart = new Timestamp(System.currentTimeMillis());
 			    actEnd = new Timestamp(System.currentTimeMillis());
@@ -359,7 +359,9 @@ public class GroupActivityServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 				GroupActivityServiceImpl actSvc = new GroupActivityServiceImpl();
 				actVO = actSvc.addAct(actName, actDesc, imgPath, itnId, hostId, signupStart, signupEnd, maxCap, signupCnt, actStart, actEnd, isPublic, allowCancel, recruitStatus);
-				
+				// 重新查詢所有活動，塞進 request scope
+				List<GroupActivityVO> actList = actSvc.getAll();
+				req.setAttribute("actList", actList);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/groupactivity/listAllAct.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -367,25 +369,25 @@ public class GroupActivityServlet extends HttpServlet {
 		}
 		
 		
-//		if ("delete".equals(action)) { // 來自listAllEmp.jsp
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
-//			req.setAttribute("errorMsgs", errorMsgs);
-//	
-//				/***************************1.接收請求參數***************************************/
-//				Integer empno = Integer.valueOf(req.getParameter("empno"));//送出資料預設是字串，要轉型為數字
-//				
-//				/***************************2.開始刪除資料***************************************/
-//				EmpService empSvc = new EmpService();
-//				empSvc.deleteEmp(empno);
-//				
-//				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-//				String url = "/emp/listAllEmp.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-//				successView.forward(req, res);
-//		}
+		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+	
+				/***************************1.接收請求參數***************************************/
+				Integer actId = Integer.valueOf(req.getParameter("actId"));//送出資料預設是字串，要轉型為數字
+				
+				/***************************2.開始刪除資料***************************************/
+				GroupActivityServiceImpl empSvc = new GroupActivityServiceImpl();
+				empSvc.deleteAct(actId);
+				
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+				String url = "/groupactivity/listAllAct.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+		}
 	}
 
 }
