@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 @Table(name = "groupactivity")
 public class GroupActivityVO implements Serializable{
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ACTID", updatable = false)
 	private Integer actId;
 	
