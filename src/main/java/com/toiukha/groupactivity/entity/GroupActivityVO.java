@@ -1,12 +1,21 @@
 package com.toiukha.groupactivity.entity;
 
+/**
+ * 【轉換註解】
+ * 此 VO 結合 JPA 設定並供 Spring Boot 使用，
+ * 新增 Bean Validation 註解以確保輸入正確。
+ */
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "groupactivity")
@@ -16,47 +25,63 @@ public class GroupActivityVO implements Serializable{
 	@Column(name = "ACTID", updatable = false)
 	private Integer actId;
 	
-	@Column(name = "ACTNAME")
-	private String actName;
+        @Column(name = "ACTNAME")
+        @NotBlank
+        private String actName;
 	
-	@Column(name = "ACTDESC")
-	private String actDesc;
+        @Column(name = "ACTDESC")
+        @NotBlank
+        private String actDesc;
 	
-	@Column(name = "IMGPATH")
-	private String imgPath;
+        @Column(name = "IMGPATH")
+        @NotBlank
+        private String imgPath;
 	
-	@Column(name = "ITNID")
-	private Integer itnId;
+        @Column(name = "ITNID")
+        @NotNull
+        private Integer itnId;
 	
-	@Column(name = "HOSTID")
-	private Integer hostId;
+        @Column(name = "HOSTID")
+        @NotNull
+        private Integer hostId;
 	
-	@Column(name = "SIGNUPSTART")
-	private Timestamp signupStart;
+        @Column(name = "SIGNUPSTART")
+        @NotNull
+        private Timestamp signupStart;
 	
-	@Column(name = "SIGNUPEND")
-	private Timestamp signupEnd;
+        @Column(name = "SIGNUPEND")
+        @NotNull
+        private Timestamp signupEnd;
 	
-	@Column(name = "MAXCAP")
-	private Integer maxCap;
+        @Column(name = "MAXCAP")
+        @NotNull
+        @Positive
+        private Integer maxCap;
 	
-	@Column(name = "SIGNUPCNT")
-	private Integer signupCnt;
+        @Column(name = "SIGNUPCNT")
+        @NotNull
+        @Min(0)
+        private Integer signupCnt;
 	
-	@Column(name = "ACTSTART")
-	private Timestamp actStart;
+        @Column(name = "ACTSTART")
+        @NotNull
+        private Timestamp actStart;
 	
-	@Column(name = "ACTEND")
-	private Timestamp actEnd;
+        @Column(name = "ACTEND")
+        @NotNull
+        private Timestamp actEnd;
 	
-	@Column(name = "ISPUBLIC")
-	private Byte isPublic;
+        @Column(name = "ISPUBLIC")
+        @NotNull
+        private Byte isPublic;
 	
-	@Column(name = "ALLOWCANCEL")
-	private Byte allowCancel;
+        @Column(name = "ALLOWCANCEL")
+        @NotNull
+        private Byte allowCancel;
 	
-	@Column(name = "RECRUITSTATUS")
-	private Byte recruitStatus;
+        @Column(name = "RECRUITSTATUS")
+        @NotNull
+        private Byte recruitStatus;
 	
 	
 	public GroupActivityVO() {

@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import com.toiukha.groupactivity.entity.GroupActivityVO;
 import com.toiukha.groupactivity.service.GroupActivityServiceBoot;
@@ -36,14 +37,14 @@ public class GroupActivityControllerBoot {
     }
 
     @PostMapping
-    public GroupActivityVO create(@RequestBody GroupActivityVO vo) {
+    public GroupActivityVO create(@Valid @RequestBody GroupActivityVO vo) {
         return service.addAct(vo.getActName(), vo.getActDesc(), vo.getImgPath(), vo.getItnId(), vo.getHostId(),
                 vo.getSignupStart(), vo.getSignupEnd(), vo.getMaxCap(), vo.getSignupCnt(),
                 vo.getActStart(), vo.getActEnd(), vo.getIsPublic(), vo.getAllowCancel(), vo.getRecruitStatus());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GroupActivityVO> update(@PathVariable("id") Integer id, @RequestBody GroupActivityVO vo) {
+    public ResponseEntity<GroupActivityVO> update(@PathVariable("id") Integer id, @Valid @RequestBody GroupActivityVO vo) {
         GroupActivityVO updated = service.updateAct(id, vo.getActName(), vo.getActDesc(), vo.getImgPath(), vo.getItnId(), vo.getHostId(),
                 vo.getSignupStart(), vo.getSignupEnd(), vo.getMaxCap(), vo.getSignupCnt(),
                 vo.getActStart(), vo.getActEnd(), vo.getIsPublic(), vo.getAllowCancel(), vo.getRecruitStatus());
