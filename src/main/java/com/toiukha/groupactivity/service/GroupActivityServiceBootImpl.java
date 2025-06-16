@@ -7,7 +7,6 @@ package com.toiukha.groupactivity.service;
  * 但為保留原有程式，故以獨立檔案存放。
  */
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,50 +22,18 @@ public class GroupActivityServiceBootImpl implements GroupActivityServiceBoot {
     private GroupActivityRepository repository;
 
     @Override
-    public GroupActivityVO addAct(String actName, String actDesc, String imgPath, Integer itnId, Integer hostId,
-                                  Timestamp signupStart, Timestamp signupEnd, Integer maxCap, Integer signupCnt,
-                                  Timestamp actStart, Timestamp actEnd, Byte isPublic, Byte allowCancel, Byte recruitStatus) {
-        GroupActivityVO act = new GroupActivityVO();
-        act.setActName(actName);
-        act.setActDesc(actDesc);
-        act.setImgPath(imgPath);
-        act.setItnId(itnId);
-        act.setHostId(hostId);
-        act.setSignupStart(signupStart);
-        act.setSignupEnd(signupEnd);
-        act.setMaxCap(maxCap);
-        act.setSignupCnt(signupCnt);
-        act.setActStart(actStart);
-        act.setActEnd(actEnd);
-        act.setIsPublic(isPublic);
-        act.setAllowCancel(allowCancel);
-        act.setRecruitStatus(recruitStatus);
-        return repository.save(act);
+    public GroupActivityVO addAct(GroupActivityVO vo) {
+        return repository.save(vo);
     }
 
     @Override
-    public GroupActivityVO updateAct(Integer actId, String actName, String actDesc, String imgPath, Integer itnId, Integer hostId,
-                                     Timestamp signupStart, Timestamp signupEnd, Integer maxCap, Integer signupCnt,
-                                     Timestamp actStart, Timestamp actEnd, Byte isPublic, Byte allowCancel, Byte recruitStatus) {
+    public GroupActivityVO updateAct(Integer actId, GroupActivityVO vo) {
         GroupActivityVO act = getByPK(actId);
         if (act == null) {
             return null;
         }
-        act.setActName(actName);
-        act.setActDesc(actDesc);
-        act.setImgPath(imgPath);
-        act.setItnId(itnId);
-        act.setHostId(hostId);
-        act.setSignupStart(signupStart);
-        act.setSignupEnd(signupEnd);
-        act.setMaxCap(maxCap);
-        act.setSignupCnt(signupCnt);
-        act.setActStart(actStart);
-        act.setActEnd(actEnd);
-        act.setIsPublic(isPublic);
-        act.setAllowCancel(allowCancel);
-        act.setRecruitStatus(recruitStatus);
-        return repository.save(act);
+        vo.setActId(actId);
+        return repository.save(vo);
     }
 
     @Override

@@ -7,7 +7,6 @@ package com.toiukha.groupactivity.controller;
  * 本類別與其並存，在新框架中提供等同功能。
  */
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +37,12 @@ public class GroupActivityControllerBoot {
 
     @PostMapping
     public GroupActivityVO create(@Valid @RequestBody GroupActivityVO vo) {
-        return service.addAct(vo.getActName(), vo.getActDesc(), vo.getImgPath(), vo.getItnId(), vo.getHostId(),
-                vo.getSignupStart(), vo.getSignupEnd(), vo.getMaxCap(), vo.getSignupCnt(),
-                vo.getActStart(), vo.getActEnd(), vo.getIsPublic(), vo.getAllowCancel(), vo.getRecruitStatus());
+        return service.addAct(vo);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<GroupActivityVO> update(@PathVariable("id") Integer id, @Valid @RequestBody GroupActivityVO vo) {
-        GroupActivityVO updated = service.updateAct(id, vo.getActName(), vo.getActDesc(), vo.getImgPath(), vo.getItnId(), vo.getHostId(),
-                vo.getSignupStart(), vo.getSignupEnd(), vo.getMaxCap(), vo.getSignupCnt(),
-                vo.getActStart(), vo.getActEnd(), vo.getIsPublic(), vo.getAllowCancel(), vo.getRecruitStatus());
+        GroupActivityVO updated = service.updateAct(id, vo);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
